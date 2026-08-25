@@ -1,0 +1,72 @@
+name: Build Doraemon iOS IPA
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-ipa:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run Tests
+        run: |
+          npx vitest run
+
+      - name: Build Web App
+        run: |
+          npm run build
+
+      - name: Setup Capacitor iOS
+        run: |
+          if [ ! -d "ios" ]; then
+            npx cap add ios
+          fi
+          npx cap sync ios
+
+      - name: Build Xcode Project (Unsigned / Ad-hoc IPA)
+        run: |
+          cd ios/App
+          
+          # Build .app bundle without code signing requirement
+          xcodebuild \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+          # Create Payload directory structure for IPA
+          mkdir -p build/Payload
+          cp -r build/Build/Products/Release-iphoneos/App.app build/Payload/
+          
+          # Package into IPA
+          cd build
+          zip -r DoraemonPocketPlayer.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DoraemonPocketPlayer-IPA
+          path: ios/App/build/DoraemonPocketPlayer.ipa
+          retention-days: 14
