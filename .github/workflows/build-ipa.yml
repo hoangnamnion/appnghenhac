@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          npx vitest run
+          npm test
 
       - name: Build Web App
         run: |
