@@ -1,0 +1,68 @@
+import type { Song } from '../types/music';
+
+export const INITIAL_TRACKS: Song[] = [
+  {
+    id: 'doraemon-theme',
+    title: 'Yume wo Kanaete Doraemon (Theme)',
+    artist: 'Mao - Doraemon OST',
+    category: 'nostalgia',
+    duration: 195,
+    src: 'https://actions.google.com/sounds/v1/water/rain_heavy.ogg',
+    cover: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500&auto=format&fit=crop&q=80',
+    lyrics: [
+      { time: 0, text: '✨ Tâm hồn bay bổng cùng thế giới Doraemon...' },
+      { time: 5, text: 'Konna koto ii na, dekitara ii na' },
+      { time: 12, text: 'Anna yume konna yume ippai aru kedo' },
+      { time: 20, text: 'Minna minna minna kanaete kureru' },
+      { time: 28, text: 'Fushigi na poketto de kanaete kureru' },
+      { time: 36, text: 'Sora wo jiyuu ni tobitai na' },
+      { time: 42, text: 'Hai! Takekoputaa! 🚁 (Chong chóng tre đây!)' },
+      { time: 50, text: 'An an an, tottemo daisuki Doraemon~ 🔔' },
+    ],
+  },
+  {
+    id: 'doraemon-lofi-chill',
+    title: 'Doraemon no Uta (Lofi Chill Beats)',
+    artist: 'Tuổi Thơ Hoài Niệm',
+    category: 'lofi',
+    duration: 180,
+    src: 'https://actions.google.com/sounds/v1/science_fiction/deep_ambience.ogg',
+    cover: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&auto=format&fit=crop&q=80',
+    lyrics: [
+      { time: 0, text: '🎵 Giai điệu Lofi êm đềm cùng chiếc túi thần kỳ...' },
+      { time: 10, text: 'Tiếng chuông vàng leng keng trong buổi chiều tà...' },
+      { time: 25, text: 'Những kỷ niệm Nobita, Shizuka, Jaian, Suneo' },
+      { time: 45, text: 'Thư giãn tâm trí và tận hưởng từng nốt nhạc...' },
+    ],
+  },
+  {
+    id: 'himawari-no-yakusoku',
+    title: 'Himawari no Yakusoku (Lời Hứa Hoa Hướng Dương)',
+    artist: 'Motohiro Hata - Stand by Me',
+    category: 'nostalgia',
+    duration: 210,
+    src: 'https://actions.google.com/sounds/v1/ambiences/daytime_forest_bonfire.ogg',
+    cover: 'https://images.unsplash.com/photo-1597848212624-a19eb35e2651?w=500&auto=format&fit=crop&q=80',
+    lyrics: [
+      { time: 0, text: '🌻 Cảm ơn vì cậu đã luôn ở bên tớ...' },
+      { time: 8, text: 'Doushite kimi ga naku no mada boku mo naite inai noni' },
+      { time: 20, text: 'Jibun yori kanashisou na kao wo shite' },
+      { time: 35, text: 'Goba no you na atatakasa de tsutsumikomu' },
+      { time: 50, text: 'Kimi no tame ni dekiru koto ga boku ni aru kana...' },
+    ],
+  },
+  {
+    id: 'doraemon-sleep-relax',
+    title: 'Giấc Mơ Của Nobita (Thư Giãn Ngủ Ngon)',
+    artist: 'Bảo Bối Thần Kỳ Music',
+    category: 'relax',
+    duration: 240,
+    src: 'https://actions.google.com/sounds/v1/weather/light_rain_on_leaves.ogg',
+    cover: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&auto=format&fit=crop&q=80',
+    lyrics: [
+      { time: 0, text: '🌙 Chúc bạn có một giấc ngủ thật ngon lành...' },
+      { time: 15, text: 'Cùng cỗ máy thời gian đưa bạn vào xứ sở thần tiên' },
+      { time: 40, text: 'Tạm gác lại âu lo, ngày mai sẽ là một ngày tuyệt vời!' },
+    ],
+  },
+];

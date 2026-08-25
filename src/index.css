@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --dora-blue: #0284c7;
+  --dora-blue-dark: #0369a1;
+  --dora-blue-light: #38bdf8;
+  --dora-red: #e11d48;
+  --dora-red-dark: #be123c;
+  --dora-yellow: #fbbf24;
+  --dora-yellow-dark: #d97706;
+  --dora-white: #ffffff;
+  --dora-dark: #0f172a;
+  --dora-gray: #f1f5f9;
+  font-family: 'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: radial-gradient(circle at 50% 10%, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+  min-height: 100vh;
+  color: var(--dora-dark);
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--dora-blue-light);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dora-blue);
+}
+
+/* Animations */
+@keyframes spin-bamboo {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bell-ring {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(15deg) scale(1.08); }
+  40% { transform: rotate(-15deg) scale(1.08); }
+  60% { transform: rotate(10deg); }
+  80% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.85); }
+}
+
+@keyframes disc-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-fast {
+  animation: spin-bamboo 0.4s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-bamboo 2.5s linear infinite;
+}
+
+.animate-bell {
+  animation: bell-ring 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+.animate-float {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-disc {
+  animation: disc-spin 20s linear infinite;
+}
+
+.disc-paused {
+  animation-play-state: paused;
+}
