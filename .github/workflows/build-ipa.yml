@@ -40,13 +40,20 @@ jobs:
         run: |
           npm run build
 
-      - name: Sync Capacitor Platforms
+      - name: Scaffold & Sync Capacitor Platforms
         run: |
+          if [ ! -d "ios" ]; then
+            npx cap add ios
+          fi
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
           npx cap sync
 
       - name: Build Android APK
         run: |
           cd android
+          tr -d '\r' < gradlew > gradlew_clean && mv gradlew_clean gradlew
           chmod +x gradlew
           ./gradlew assembleDebug
           echo "Build Android APK thanh cong!"
