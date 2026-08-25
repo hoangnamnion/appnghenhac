@@ -1,4 +1,4 @@
-name: Build Doraemon iOS IPA
+name: Build iOS IPA & Android APK
 
 on:
   push:
@@ -8,12 +8,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-ipa:
+  build-apps:
+    name: Build & Package .IPA & .APK Files
     runs-on: macos-14
 
     steps:
-      - name: Checkout repository
+      - name: Checkout source code
         uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -21,11 +28,11 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           npm install
 
-      - name: Run Tests
+      - name: Run Automated Tests
         run: |
           npm test
 
@@ -33,18 +40,26 @@ jobs:
         run: |
           npm run build
 
-      - name: Setup Capacitor iOS
+      - name: Scaffold & Sync Capacitor Platforms (iOS & Android)
         run: |
           if [ ! -d "ios" ]; then
             npx cap add ios
           fi
-          npx cap sync ios
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+          npx cap sync
 
-      - name: Build Xcode Project (Unsigned / Ad-hoc IPA)
+      - name: Build Android APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+          echo "Build Android APK thanh cong!"
+
+      - name: Build iOS App Bundle
         run: |
           cd ios/App
-          
-          # Build .app bundle without code signing requirement
           xcodebuild \
             -workspace App.xcworkspace \
             -scheme App \
@@ -56,17 +71,24 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             build
 
-          # Create Payload directory structure for IPA
-          mkdir -p build/Payload
-          cp -r build/Build/Products/Release-iphoneos/App.app build/Payload/
-          
-          # Package into IPA
-          cd build
-          zip -r DoraemonPocketPlayer.ipa Payload
+      - name: Package into IPA
+        run: |
+          mkdir -p ios/App/build/Payload
+          cp -r ios/App/build/Build/Products/Release-iphoneos/App.app ios/App/build/Payload/
+          cd ios/App/build
+          zip -r -9 DoraemonPocketPlayer.ipa Payload
+          echo "Build iOS IPA thanh cong!"
 
-      - name: Upload IPA Artifact
+      - name: Upload IPA Artifact (iOS)
         uses: actions/upload-artifact@v4
         with:
-          name: DoraemonPocketPlayer-IPA
+          name: Doraemon-iOS-IPA
           path: ios/App/build/DoraemonPocketPlayer.ipa
+          retention-days: 14
+
+      - name: Upload APK Artifact (Android)
+        uses: actions/upload-artifact@v4
+        with:
+          name: Doraemon-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 14
